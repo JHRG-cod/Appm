@@ -1,0 +1,55 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #000; /* Fundo preto */
+    color: white; /* Texto branco */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+button {
+    width: 150px;
+    height: 150px;
+    border: none;
+    border-radius: 50%;
+    background-color: #141414; /* Amarelo */
+    color: white; /* Texto branco */
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 20px;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+button:hover {
+    background-color: #666666; /* Amarelo claro ao passar o mouse */
+    transform: scale(1.1); /* Aumenta o botão ao passar o mouse */
+}
+
+/* Estilo geral para o contêiner */
+#status-container {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+/* Estilos padrão para as cores */
+p {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+/* Cor de status não solicitado */
+.status-nao-solicitado {
+    color: gray;
+}
+
+/* Cor de status solicitado */
+.status-solicitado {
+    color: red;
+    font-weight: bold;
+}
