@@ -7,17 +7,45 @@
     <link rel="stylesheet" href="../css/status.css">
 </head>
 <body>
-    <h1>Status dos Chamados</h1>
-    <div id="status-container">
-        <p>Azul: <span id="status-azul">Não Solicitado Atendimento</span></p>
-        <p>Vermelho: <span id="status-vermelho">Não Solicitado Atendimento</span></p>
-        <p>Verde: <span id="status-verde">Não Solicitado Atendimento</span></p>
-        <p>Amarelo: <span id="status-amarelo">Não Solicitado Atendimento</span></p>
-    </div>
-    <div id="buttons">
-        <button onclick="limparTodosStatus()">Limpar Solicitação de atendimento</button>
-        <button onclick="location.href='../index.html'">Voltar</button>
-    </div>
+    <header>
+        <h1>Status dos Chamados</h1>
+    </header>
+    <main>
+        <div class="quadrantes">
+            <!-- Quadrantes com status -->
+            <div class="quadrante azul">
+                <p>Azul: <span id="status-azul">Não Solicitado Atendimento</span></p>
+                <button class="btn-limpar" onclick="limparStatus('azul')">Limpar</button>
+            </div>
+            <div class="quadrante vermelho">
+                <p>Vermelho: <span id="status-vermelho">Não Solicitado Atendimento</span></p>
+                <button class="btn-limpar" onclick="limparStatus('vermelho')">Limpar</button>
+            </div>
+            <div class="quadrante verde">
+                <p>Verde: <span id="status-verde">Não Solicitado Atendimento</span></p>
+                <button class="btn-limpar" onclick="limparStatus('verde')">Limpar</button>
+            </div>
+            <div class="quadrante amarelo">
+                <p>Amarelo: <span id="status-amarelo">Não Solicitado Atendimento</span></p>
+                <button class="btn-limpar" onclick="limparStatus('amarelo')">Limpar</button>
+            </div>
+        </div>
+        <!-- Botões Gerais -->
+        <div class="botoes-gerais">
+            <button onclick="limparTodosStatus()">Limpar Todos os Status</button>
+            <button onclick="location.href='../index.html'">Voltar</button>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Sistema de Chamados</p>
+    </footer>
+
+    <!-- Adicionando os áudios -->
+    <audio id="som-azul" src="../sons/som-azul.mp3"></audio>
+    <audio id="som-vermelho" src="../sons/som-vermelho.mp3"></audio>
+    <audio id="som-verde" src="../sons/som-verde.mp3"></audio>
+    <audio id="som-amarelo" src="../sons/som-amarelo.mp3"></audio>
+
     <script src="../js/script.js"></script>
 </body>
 </html>
