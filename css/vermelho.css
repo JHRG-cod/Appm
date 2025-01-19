@@ -13,20 +13,23 @@ body {
 }
 
 button {
-    width: 150px;
-    height: 150px;
-    border: none;
-    border-radius: 50%;
-    background-color: #700000; /* Amarelo */
-    color: white; /* Texto branco */
+    width: 160px;
+    height: 160px;
+    border: 8px solid rgba(85, 1, 1, 0.7); /* Borda simulando brilho */
+    border-radius: 60%;
+    background-color: #7a0303;
+    color: rgb(255, 255, 255); /* Texto branco */
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
     margin: 20px;
-    transition: transform 0.2s ease, background-color 0.2s ease;
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 15px rgba(245, 33, 33, 0.4); /* Brilho inicial leve */
 }
 
 button:hover {
-    background-color: #f10000; /* Amarelo claro ao passar o mouse */
+    background-color: #ff0000; /* Amarelo claro ao passar o mouse */
+    border: 5px solid rgb(148, 11, 11); /* Brilho mais forte ao passar o mouse */
     transform: scale(1.1); /* Aumenta o botão ao passar o mouse */
 }
+
