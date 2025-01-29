@@ -43,17 +43,48 @@ h1 {
     background-color: #1e90ff;
     color: #fff;
 }
+.quadrante.azul-escuro {
+    background-color: #0025fa;
+    color: #fff;
+}
+.quadrante.azul-claro {
+    background-color: #95dbfc;
+    color: #fff;
+}
 .quadrante.vermelho {
     background-color: #ff6347; /* Restabelecido para garantir que a cor é aplicada */
     color: #fff;
-
+}
+.quadrante.vermelho-escuro {
+    background-color: #610505; /* Restabelecido para garantir que a cor é aplicada */
+    color: #fff;
+}
+.quadrante.vermelho-claro {
+    background-color: #fd5a5a; /* Restabelecido para garantir que a cor é aplicada */
+    color: #fff;
 }
 .quadrante.verde {
     background-color: #32cd32;
     color: #fff;
 }
+.quadrante.verde-escuro {
+    background-color: #063801;
+    color: #fff;
+}
+.quadrante.verde-claro {
+    background-color: #82fc5c;
+    color: #fff;
+}
 .quadrante.amarelo {
-    background-color: #ffcc00;
+    background-color: #f0ec1b;
+    color: #000;
+}
+.quadrante.amarelo-escuro {
+    background-color: #849205;
+    color: #000;
+}
+.quadrante.amarelo-claro {
+    background-color: #fdfa44;
     color: #000;
 }
 
