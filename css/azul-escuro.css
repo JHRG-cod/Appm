@@ -17,7 +17,7 @@ button {
     height: 160px;
     border: 8px solid rgba(9, 41, 184, 0.7); /* Borda simulando brilho */
     border-radius: 60%;
-    background-color: #2b07fa;
+    background-color: #02105f;
     color: rgb(255, 255, 255); /* Texto branco */
     font-size: 18px;
     font-weight: bold;

@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     text-align: center;
     background-color: #000; /* Fundo preto */
-    color: white; /* Texto branco */
+    color: rgb(255, 255, 255); /* Texto branco */
     margin: 0;
     padding: 0;
     display: flex;
@@ -17,8 +17,8 @@ button {
     height: 160px;
     border: 8px solid rgba(255, 255, 0, 0.7); /* Borda simulando brilho */
     border-radius: 60%;
-    background-color: #FEF66B; /* Amarelo */
-    color: rgb(255, 255, 255); /* Texto branco */
+    background-color: #f0ec1b; /* Amarelo */
+    color: rgb(8, 8, 8); /* Texto branco */
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;

@@ -40,11 +40,11 @@ h1 {
 
 /* Cores para os Quadrantes */
 .quadrante.azul {
-    background-color: #1e90ff;
+    background-color: #0000FF;
     color: #fff;
 }
 .quadrante.azul-escuro {
-    background-color: #0025fa;
+    background-color: #02105f;
     color: #fff;
 }
 .quadrante.azul-claro {
@@ -52,19 +52,19 @@ h1 {
     color: #fff;
 }
 .quadrante.vermelho {
-    background-color: #ff6347; /* Restabelecido para garantir que a cor é aplicada */
-    color: #fff;
-}
-.quadrante.vermelho-escuro {
     background-color: #610505; /* Restabelecido para garantir que a cor é aplicada */
     color: #fff;
 }
+.quadrante.vermelho-escuro {
+    background-color: #300000; /* Restabelecido para garantir que a cor é aplicada */
+    color: #fff;
+}
 .quadrante.vermelho-claro {
-    background-color: #fd5a5a; /* Restabelecido para garantir que a cor é aplicada */
+    background-color: #ff0000; /* Restabelecido para garantir que a cor é aplicada */
     color: #fff;
 }
 .quadrante.verde {
-    background-color: #32cd32;
+    background-color: #008000;
     color: #fff;
 }
 .quadrante.verde-escuro {
@@ -80,11 +80,11 @@ h1 {
     color: #000;
 }
 .quadrante.amarelo-escuro {
-    background-color: #849205;
+    background-color: #7c7e05;
     color: #000;
 }
 .quadrante.amarelo-claro {
-    background-color: #fdfa44;
+    background-color: #Ffff00;
     color: #000;
 }
 
