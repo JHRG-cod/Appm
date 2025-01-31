@@ -18,11 +18,14 @@ class ToggleManager {
             this.atualizarTodosStatus();
         });
 
+        // Sincroniza as mudanças entre abas
         window.addEventListener('storage', (event) => {
             if (event.key.startsWith('status-')) {
                 const cor = event.key.replace('status-', '');
                 this.atualizarInterface(cor);
-                if (event.newValue.includes('Solicitado')) this.tocarSom(cor);
+                if (event.newValue === 'Solicitado o atendimento') {
+                    this.tocarSom(cor);
+                }
             }
         });
     }
@@ -31,7 +34,9 @@ class ToggleManager {
         // Configurar toggles
         cores.forEach(cor => {
             const toggle = document.getElementById(`toggle-${cor}`);
-            if (toggle) toggle.addEventListener('click', () => this.alternarStatus(cor));
+            if (toggle) {
+                toggle.addEventListener('click', () => this.alternarStatus(cor));
+            }
         });
 
         // Configurar botões de limpeza
@@ -63,7 +68,7 @@ class ToggleManager {
     atualizarInterface(cor) {
         const status = localStorage.getItem(`status-${cor}`) || 'Não Solicitado Atendimento';
         
-        // Atualizar toggle
+        // Atualizar toggle (se existir)
         const toggle = document.getElementById(`toggle-${cor}`);
         if (toggle) {
             toggle.classList.toggle('active', status === 'Solicitado o atendimento');
@@ -76,7 +81,9 @@ class ToggleManager {
         if (elementoStatus) {
             elementoStatus.textContent = status;
             const quadrante = document.querySelector(`.quadrante.${cor}`);
-            if (quadrante) quadrante.classList.toggle('destaque', status === 'Solicitado o atendimento');
+            if (quadrante) {
+                quadrante.classList.toggle('destaque', status === 'Solicitado o atendimento');
+            }
         }
     }
 
