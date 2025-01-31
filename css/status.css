@@ -38,6 +38,11 @@ h1 {
     animation: fade-in 0.8s ease-in-out forwards;
 }
 
+/* Destaque para quadrantes ativos */
+.quadrante.destaque {
+    animation: pulse 1.5s infinite alternate;
+}
+
 /* Cores para os Quadrantes */
 .quadrante.azul {
     background-color: #0000FF;
@@ -52,15 +57,15 @@ h1 {
     color: #fff;
 }
 .quadrante.vermelho {
-    background-color: #610505; /* Restabelecido para garantir que a cor é aplicada */
+    background-color: #610505;
     color: #fff;
 }
 .quadrante.vermelho-escuro {
-    background-color: #300000; /* Restabelecido para garantir que a cor é aplicada */
+    background-color: #300000;
     color: #fff;
 }
 .quadrante.vermelho-claro {
-    background-color: #ff0000; /* Restabelecido para garantir que a cor é aplicada */
+    background-color: #ff0000;
     color: #fff;
 }
 .quadrante.verde {

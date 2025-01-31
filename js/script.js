@@ -1,6 +1,10 @@
-// Configurações globais
 const ALERT_SOUND_PATH = './sons/alerta.mp3';
-const cores = ['amarelo-claro']; // Adicione outras cores conforme necessário
+const cores = [
+    'azul', 'azul-claro', 'azul-escuro',
+    'vermelho', 'vermelho-claro', 'vermelho-escuro',
+    'verde', 'verde-claro', 'verde-escuro',
+    'amarelo', 'amarelo-escuro', 'amarelo-claro'
+];
 
 class ToggleManager {
     constructor() {
@@ -10,66 +14,89 @@ class ToggleManager {
 
     init() {
         document.addEventListener('DOMContentLoaded', () => {
-            this.setupEventListeners();
+            this.configurarEventos();
             this.atualizarTodosStatus();
         });
-        
+
         window.addEventListener('storage', (event) => {
             if (event.key.startsWith('status-')) {
-                this.atualizarStatusVisual(event.key.split('-')[1]);
+                const cor = event.key.replace('status-', '');
+                this.atualizarInterface(cor);
+                if (event.newValue.includes('Solicitado')) this.tocarSom(cor);
             }
         });
     }
 
-    setupEventListeners() {
+    configurarEventos() {
+        // Configurar toggles
         cores.forEach(cor => {
             const toggle = document.getElementById(`toggle-${cor}`);
-            if (toggle) {
-                toggle.addEventListener('click', () => this.toggleStatus(cor));
-            }
+            if (toggle) toggle.addEventListener('click', () => this.alternarStatus(cor));
+        });
+
+        // Configurar botões de limpeza
+        document.querySelectorAll('.btn-limpar').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const cor = e.target.dataset.cor;
+                this.limparStatus(cor);
+            });
         });
     }
 
-    toggleStatus(cor) {
-        const statusKey = `status-${cor}`;
-        const currentStatus = localStorage.getItem(statusKey);
-        const novoStatus = currentStatus === 'Chamando Garçom' ? 
-            'Não Solicitado Atendimento' : 'Chamando Garçom';
+    alternarStatus(cor) {
+        const statusAtual = localStorage.getItem(`status-${cor}`) || 'Não Solicitado Atendimento';
+        const novoStatus = statusAtual === 'Não Solicitado Atendimento' 
+            ? 'Solicitado o atendimento' 
+            : 'Não Solicitado Atendimento';
 
-        localStorage.setItem(statusKey, novoStatus);
-        this.atualizarStatusVisual(cor);
-        
-        if (novoStatus === 'Chamando Garçom') {
-            this.tocarSom();
+        localStorage.setItem(`status-${cor}`, novoStatus);
+        this.atualizarInterface(cor);
+
+        if (novoStatus === 'Solicitado o atendimento') {
+            this.tocarSom(cor);
             this.agendarReset(cor);
         } else {
             this.cancelarReset(cor);
         }
     }
 
-    atualizarStatusVisual(cor) {
+    atualizarInterface(cor) {
         const status = localStorage.getItem(`status-${cor}`) || 'Não Solicitado Atendimento';
-        const toggle = document.getElementById(`toggle-${cor}`);
         
+        // Atualizar toggle
+        const toggle = document.getElementById(`toggle-${cor}`);
         if (toggle) {
-            const textElement = toggle.querySelector('.toggle-text');
-            const isActive = status === 'Chamando Garçom';
-            
-            toggle.classList.toggle('active', isActive);
-            textElement.textContent = isActive ? 'Chamando Garçom' : 'Chamar Garçom';
+            toggle.classList.toggle('active', status === 'Solicitado o atendimento');
+            toggle.querySelector('.toggle-text').textContent = 
+                status === 'Solicitado o atendimento' ? 'Aguarde Garçom' : 'Chamar Garçom';
+        }
+
+        // Atualizar status.html
+        const elementoStatus = document.getElementById(`status-${cor}`);
+        if (elementoStatus) {
+            elementoStatus.textContent = status;
+            const quadrante = document.querySelector(`.quadrante.${cor}`);
+            if (quadrante) quadrante.classList.toggle('destaque', status === 'Solicitado o atendimento');
         }
     }
 
-    atualizarTodosStatus() {
-        cores.forEach(cor => this.atualizarStatusVisual(cor));
+    limparStatus(cor) {
+        localStorage.setItem(`status-${cor}`, 'Não Solicitado Atendimento');
+        this.atualizarInterface(cor);
+        this.cancelarReset(cor);
+    }
+
+    limparTodosStatus() {
+        cores.forEach(cor => {
+            localStorage.setItem(`status-${cor}`, 'Não Solicitado Atendimento');
+            this.atualizarInterface(cor);
+            this.cancelarReset(cor);
+        });
     }
 
     agendarReset(cor) {
         this.cancelarReset(cor);
-        this.timers[cor] = setTimeout(() => {
-            localStorage.setItem(`status-${cor}`, 'Não Solicitado Atendimento');
-            this.atualizarStatusVisual(cor);
-        }, 120000);
+        this.timers[cor] = setTimeout(() => this.limparStatus(cor), 120000);
     }
 
     cancelarReset(cor) {
@@ -79,13 +106,15 @@ class ToggleManager {
         }
     }
 
-    tocarSom() {
-        const audio = new Audio(ALERT_SOUND_PATH);
-        audio.play().catch(error => {
-            console.error('Erro ao reproduzir som:', error);
-        });
+    tocarSom(cor) {
+        const tipoCor = cor.split('-')[0];
+        const audio = document.getElementById(`som-${tipoCor}`) || new Audio(ALERT_SOUND_PATH);
+        audio.play().catch(error => console.error('Erro ao reproduzir som:', error));
     }
 }
 
-// Inicializar o gerenciador
-new ToggleManager();
+const gerenciador = new ToggleManager();
+
+// Funções globais para acesso via HTML
+window.limparStatus = (cor) => gerenciador.limparStatus(cor);
+window.limparTodosStatus = () => gerenciador.limparTodosStatus();
