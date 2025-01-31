@@ -2,52 +2,96 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;
     background-color: #000000;
-    color:rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    min-height: 100vh;
 }
 
-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 15px 30px;
-    width: 250px;
-    height: 70px;
-    border: none;
+.toggle-container {
+    width: 350px;
+    padding: 15px;
     border-radius: 40px;
     background: linear-gradient(90deg, #28a745, #3de076);
-    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.toggle-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+}
+
+.toggle-text {
     font-size: 24px;
     font-weight: bold;
     text-transform: uppercase;
-    cursor: pointer;
-    box-shadow: 0 8px 20px rgba(206, 206, 206, 0.2);
+    color: white;
     transition: all 0.3s ease;
+    padding-left: 20px;
+    flex-grow: 1;
+}
+
+.toggle-slider {
+    width: 100px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
     position: relative;
+    margin-left: 15px;
+    transition: all 0.3s ease;
 }
 
-button:hover {
-    background: linear-gradient(90deg, #218838, #34d063);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-    transform: scale(1.05);
+.toggle-button {
+    width: 46px;
+    height: 46px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-
-
-button.dark {
-    background: linear-gradient(90deg, #cfd1d4, #e6e7eb);
-    color: #212529;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+/* Estados ativos */
+.toggle-container.active {
+    background: linear-gradient(90deg, #3de076, #28a745);
+    box-shadow: 0 0 15px rgba(103, 202, 138, 0.5);
 }
 
-button.dark:hover {
-    background: linear-gradient(90deg, #bfc1c4, #d8dadf);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    transform: scale(1.05);
+.toggle-container.active .toggle-text {
+    color: #519e62;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+.toggle-container.active .toggle-slider { /* botão das cores ligado */
+    background-color: rgba(53, 168, 49, 0.3);
+}
+
+.toggle-container.active .toggle-button {
+    left: calc(100% - 48px);
+    background-color: #218838;
+    transform: rotate(360deg);
+}
+
+/* Efeitos de hover */
+.toggle-container:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(206, 206, 206, 0.3);
+}
+
+.toggle-container:active .toggle-button {
+    width: 50px;
+    height: 50px;
 }

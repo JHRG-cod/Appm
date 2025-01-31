@@ -1,91 +1,91 @@
-// Caminho do áudio do alerta
+// Configurações globais
 const ALERT_SOUND_PATH = './sons/alerta.mp3';
+const cores = ['amarelo-claro']; // Adicione outras cores conforme necessário
 
-// Lista de todas as cores e suas variações
-const cores = [
-    'azul', 'azul-claro', 'azul-escuro',
-    'vermelho', 'vermelho-claro', 'vermelho-escuro',
-    'verde', 'verde-claro', 'verde-escuro',
-    'amarelo', 'amarelo-claro', 'amarelo-escuro'
-];
-
-document.addEventListener('DOMContentLoaded', () => {
-    atualizarStatus();
-    configurarBotoes();
-    window.addEventListener('storage', atualizarTodosStatus);
-});
-
-function configurarBotoes() {
-    cores.forEach(cor => {
-        const botaoChamar = document.querySelector(`#botao-chamar-${cor}`);
-        if (botaoChamar) {
-            console.log(`Botão configurado: #botao-chamar-${cor}`);
-            botaoChamar.addEventListener('click', () => chamarGarcom(cor));
-        } else {
-            console.warn(`Botão não encontrado: #botao-chamar-${cor}`);
-        }
-    });
-}
-
-// Toca som de alerta
-function tocarSom() {
-    const som = new Audio(ALERT_SOUND_PATH);
-    som.play().catch(error => console.error('Erro ao tocar som:', error));
-}
-
-// Chama o garçom e agenda a limpeza após 2 minutos
-function chamarGarcom(cor) {
-    const statusKey = `status-${cor}`;
-    localStorage.setItem(statusKey, `Solicitado o atendimento`);
-    alert(`Garçom chamado para ${cor}`);
-    tocarSom(); // Reproduz o som de alarme imediatamente
-    atualizarStatus();
-
-    // Limpa o status automaticamente após 2 minutos
-    if (!window.statusTimers) {
-        window.statusTimers = {};
+class ToggleManager {
+    constructor() {
+        this.timers = {};
+        this.init();
     }
-    clearTimeout(window.statusTimers[cor]); // Evita múltiplos timers
-    window.statusTimers[cor] = setTimeout(() => limparStatus(cor), 120000); // Limpa após 2 minutos
-}
 
-// Limpa o status de uma cor específica
-function limparStatus(cor) {
-    localStorage.setItem(`status-${cor}`, 'Não Solicitado Atendimento');
-    atualizarStatus();
-}
-
-// Atualiza os status na página com base no localStorage
-function atualizarStatus() {
-    cores.forEach(cor => {
-        const status = localStorage.getItem(`status-${cor}`) || 'Não Solicitado Atendimento';
-        const statusElement = document.getElementById(`status-${cor}`);
-        if (statusElement) {
-            statusElement.textContent = status;
-
-            // Adiciona destaque visual para status ativos
-            const quadrante = document.querySelector(`.quadrante.${cor}`);
-            if (quadrante) {
-                if (status.includes('Solicitado o atendimento')) {
-                    quadrante.classList.add('destaque');
-                } else {
-                    quadrante.classList.remove('destaque');
-                }
-            } else {
-                console.warn(`Quadrante não encontrado: .quadrante.${cor}`);
+    init() {
+        document.addEventListener('DOMContentLoaded', () => {
+            this.setupEventListeners();
+            this.atualizarTodosStatus();
+        });
+        
+        window.addEventListener('storage', (event) => {
+            if (event.key.startsWith('status-')) {
+                this.atualizarStatusVisual(event.key.split('-')[1]);
             }
-        } else {
-            console.warn(`Elemento de status não encontrado: #status-${cor}`);
-        }
-    });
-}
+        });
+    }
 
-// Sincroniza todos os status quando qualquer mudança ocorre no localStorage
-function atualizarTodosStatus(event) {
-    if (cores.some(cor => event.key === `status-${cor}`)) {
-        atualizarStatus(); // Atualiza a interface
-        if (event.newValue && event.newValue.includes('Solicitado o atendimento')) {
-            tocarSom(); // Reproduz som apenas para chamadas ativas
+    setupEventListeners() {
+        cores.forEach(cor => {
+            const toggle = document.getElementById(`toggle-${cor}`);
+            if (toggle) {
+                toggle.addEventListener('click', () => this.toggleStatus(cor));
+            }
+        });
+    }
+
+    toggleStatus(cor) {
+        const statusKey = `status-${cor}`;
+        const currentStatus = localStorage.getItem(statusKey);
+        const novoStatus = currentStatus === 'Chamando Garçom' ? 
+            'Não Solicitado Atendimento' : 'Chamando Garçom';
+
+        localStorage.setItem(statusKey, novoStatus);
+        this.atualizarStatusVisual(cor);
+        
+        if (novoStatus === 'Chamando Garçom') {
+            this.tocarSom();
+            this.agendarReset(cor);
+        } else {
+            this.cancelarReset(cor);
         }
     }
+
+    atualizarStatusVisual(cor) {
+        const status = localStorage.getItem(`status-${cor}`) || 'Não Solicitado Atendimento';
+        const toggle = document.getElementById(`toggle-${cor}`);
+        
+        if (toggle) {
+            const textElement = toggle.querySelector('.toggle-text');
+            const isActive = status === 'Chamando Garçom';
+            
+            toggle.classList.toggle('active', isActive);
+            textElement.textContent = isActive ? 'Chamando Garçom' : 'Chamar Garçom';
+        }
+    }
+
+    atualizarTodosStatus() {
+        cores.forEach(cor => this.atualizarStatusVisual(cor));
+    }
+
+    agendarReset(cor) {
+        this.cancelarReset(cor);
+        this.timers[cor] = setTimeout(() => {
+            localStorage.setItem(`status-${cor}`, 'Não Solicitado Atendimento');
+            this.atualizarStatusVisual(cor);
+        }, 120000);
+    }
+
+    cancelarReset(cor) {
+        if (this.timers[cor]) {
+            clearTimeout(this.timers[cor]);
+            delete this.timers[cor];
+        }
+    }
+
+    tocarSom() {
+        const audio = new Audio(ALERT_SOUND_PATH);
+        audio.play().catch(error => {
+            console.error('Erro ao reproduzir som:', error);
+        });
+    }
 }
+
+// Inicializar o gerenciador
+new ToggleManager();
