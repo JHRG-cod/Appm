@@ -129,7 +129,7 @@ window.limparTodosStatus = () => gerenciador.limparTodosStatus(); */
 
 
 // script.js
-import { db } from '../firebase.js'; // Importação correta da configuração do Firebase
+import { db } from '../firebase.js';
 import { doc, setDoc, onSnapshot, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const ALERT_SOUND_PATH = './sons/alerta.mp3';
@@ -260,6 +260,5 @@ class ToggleManager {
 
 const gerenciador = new ToggleManager();
 
-// Funções globais para acesso via HTML
 window.limparStatus = (cor) => gerenciador.limparStatus(cor);
 window.limparTodosStatus = () => gerenciador.limparTodosStatus();
