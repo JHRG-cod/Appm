@@ -126,26 +126,15 @@ const gerenciador = new ToggleManager();
 window.limparStatus = (cor) => gerenciador.limparStatus(cor);
 window.limparTodosStatus = () => gerenciador.limparTodosStatus(); */
 // script.js (Atualizado para Firebase Firestore)
-async alternarStatus(cor) {
-    const docRef = doc(db, "chamados", "status");
-    const docSnap = await getDoc(docRef);
-    const data = docSnap.exists() ? docSnap.data() : {};
 
-    const novoStatus = data[cor] === 'Solicitado o atendimento' 
-        ? 'Não Solicitado Atendimento' 
-        : 'Solicitado o atendimento';
 
-    await setDoc(docRef, { ...data, [cor]: novoStatus }); // Sem merge, para criar o documento se não existir
-
-    // Restante do código...
-}
-Código do script.js Revisado e Funcional
-javascript
-Copy
+//Código do script.js Revisado e Funcional
 // script.js (Atualizado e validado)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, doc, setDoc, onSnapshot, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, doc, setDoc, onSnapshot, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";// script.js (correção)
+import { db } from '../firebase.js'; // Caminho correto para o firebase.js
 
+// Remova a configuração duplicada do Firebase aqui
 const ALERT_SOUND_PATH = './sons/alerta.mp3';
 const cores = [
     'azul', 'azul-claro', 'azul-escuro',
