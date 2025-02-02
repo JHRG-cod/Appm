@@ -126,6 +126,23 @@ const gerenciador = new ToggleManager();
 window.limparStatus = (cor) => gerenciador.limparStatus(cor);
 window.limparTodosStatus = () => gerenciador.limparTodosStatus(); */
 // script.js (Atualizado para Firebase Firestore)
+async alternarStatus(cor) {
+    const docRef = doc(db, "chamados", "status");
+    const docSnap = await getDoc(docRef);
+    const data = docSnap.exists() ? docSnap.data() : {};
+
+    const novoStatus = data[cor] === 'Solicitado o atendimento' 
+        ? 'Não Solicitado Atendimento' 
+        : 'Solicitado o atendimento';
+
+    await setDoc(docRef, { ...data, [cor]: novoStatus }); // Sem merge, para criar o documento se não existir
+
+    // Restante do código...
+}
+Código do script.js Revisado e Funcional
+javascript
+Copy
+// script.js (Atualizado e validado)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, doc, setDoc, onSnapshot, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
@@ -137,7 +154,6 @@ const cores = [
     'amarelo', 'amarelo-escuro', 'amarelo-claro'
 ];
 
-// Configuração do Firebase (mesma do seu projeto)
 const firebaseConfig = {
     apiKey: "AIzaSyDWJoQ2t0eC1FnbvECc9lHvavN9jowpAhg",
     authDomain: "appm-17e90.firebaseapp.com",
@@ -147,7 +163,6 @@ const firebaseConfig = {
     appId: "1:1001756735669:web:701b6f893ee9e692bee6fc"
 };
 
-// Inicialização do Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
@@ -161,14 +176,12 @@ class ToggleManager {
     init() {
         document.addEventListener('DOMContentLoaded', () => {
             this.configurarEventos();
-            this.iniciarEscutaFirestore(); // Inicia a escuta em tempo real
+            this.iniciarEscutaFirestore();
         });
     }
 
-    // Escuta mudanças no Firestore
     iniciarEscutaFirestore() {
         const docRef = doc(db, "chamados", "status");
-        
         this.unsubscribe = onSnapshot(docRef, (docSnap) => {
             if (docSnap.exists()) {
                 const data = docSnap.data();
@@ -198,12 +211,14 @@ class ToggleManager {
 
     async alternarStatus(cor) {
         const docRef = doc(db, "chamados", "status");
-        const statusAtual = await this.getStatus(cor);
-        const novoStatus = statusAtual === 'Não Solicitado Atendimento' 
-            ? 'Solicitado o atendimento' 
-            : 'Não Solicitado Atendimento';
+        const docSnap = await getDoc(docRef);
+        const data = docSnap.exists() ? docSnap.data() : {};
+        
+        const novoStatus = data[cor] === 'Solicitado o atendimento' 
+            ? 'Não Solicitado Atendimento' 
+            : 'Solicitado o atendimento';
 
-        await setDoc(docRef, { [cor]: novoStatus }, { merge: true });
+        await setDoc(docRef, { ...data, [cor]: novoStatus });
 
         if (novoStatus === 'Solicitado o atendimento') {
             this.tocarSom(cor);
