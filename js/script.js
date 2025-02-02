@@ -128,13 +128,10 @@ window.limparTodosStatus = () => gerenciador.limparTodosStatus(); */
 // script.js (Atualizado para Firebase Firestore)
 
 
-//Código do script.js Revisado e Funcional
-// script.js (Atualizado e validado)
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, doc, setDoc, onSnapshot, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";// script.js (correção)
-import { db } from '../firebase.js'; // Caminho correto para o firebase.js
+// script.js
+import { db } from '../firebase.js'; // Importação correta da configuração do Firebase
+import { doc, setDoc, onSnapshot, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// Remova a configuração duplicada do Firebase aqui
 const ALERT_SOUND_PATH = './sons/alerta.mp3';
 const cores = [
     'azul', 'azul-claro', 'azul-escuro',
@@ -142,18 +139,6 @@ const cores = [
     'verde', 'verde-claro', 'verde-escuro',
     'amarelo', 'amarelo-escuro', 'amarelo-claro'
 ];
-
-const firebaseConfig = {
-    apiKey: "AIzaSyDWJoQ2t0eC1FnbvECc9lHvavN9jowpAhg",
-    authDomain: "appm-17e90.firebaseapp.com",
-    projectId: "appm-17e90",
-    storageBucket: "appm-17e90.firebasestorage.app",
-    messagingSenderId: "1001756735669",
-    appId: "1:1001756735669:web:701b6f893ee9e692bee6fc"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
 
 class ToggleManager {
     constructor() {
@@ -201,8 +186,13 @@ class ToggleManager {
     async alternarStatus(cor) {
         const docRef = doc(db, "chamados", "status");
         const docSnap = await getDoc(docRef);
-        const data = docSnap.exists() ? docSnap.data() : {};
-        
+        let data = docSnap.exists() ? docSnap.data() : {};
+
+        // Garante que todas as cores existam no documento
+        cores.forEach(c => {
+            if (!data[c]) data[c] = 'Não Solicitado Atendimento';
+        });
+
         const novoStatus = data[cor] === 'Solicitado o atendimento' 
             ? 'Não Solicitado Atendimento' 
             : 'Solicitado o atendimento';
@@ -215,12 +205,6 @@ class ToggleManager {
         } else {
             this.cancelarReset(cor);
         }
-    }
-
-    async getStatus(cor) {
-        const docRef = doc(db, "chamados", "status");
-        const docSnap = await getDoc(docRef);
-        return docSnap.exists() ? docSnap.data()[cor] || 'Não Solicitado Atendimento' : 'Não Solicitado Atendimento';
     }
 
     atualizarInterface(cor, status) {
