@@ -151,7 +151,22 @@ class ToggleManager {
         document.addEventListener('DOMContentLoaded', () => {
             this.configurarEventos();
             this.iniciarEscutaFirestore();
+            this.inicializarFirestore(); // Novo método adicionado
         });
+    }
+
+    // Garante que o documento exista com valores padrão
+    async inicializarFirestore() {
+        const docRef = doc(db, "chamados", "status");
+        const docSnap = await getDoc(docRef);
+        
+        if (!docSnap.exists()) {
+            const initialData = {};
+            cores.forEach(cor => {
+                initialData[cor] = 'Não Solicitado Atendimento';
+            });
+            await setDoc(docRef, initialData);
+        }
     }
 
     iniciarEscutaFirestore() {
@@ -160,8 +175,7 @@ class ToggleManager {
             if (docSnap.exists()) {
                 const data = docSnap.data();
                 cores.forEach(cor => {
-                    const status = data[cor] || 'Não Solicitado Atendimento';
-                    this.atualizarInterface(cor, status);
+                    this.atualizarInterface(cor, data[cor]);
                 });
             }
         });
@@ -186,28 +200,25 @@ class ToggleManager {
     async alternarStatus(cor) {
         const docRef = doc(db, "chamados", "status");
         const docSnap = await getDoc(docRef);
-        let data = docSnap.exists() ? docSnap.data() : {};
-
-        // Garante que todas as cores existam no documento
-        cores.forEach(c => {
-            if (!data[c]) data[c] = 'Não Solicitado Atendimento';
-        });
+        const data = docSnap.data();
 
         const novoStatus = data[cor] === 'Solicitado o atendimento' 
             ? 'Não Solicitado Atendimento' 
             : 'Solicitado o atendimento';
 
-        await setDoc(docRef, { ...data, [cor]: novoStatus });
+        await setDoc(docRef, {
+            ...data,
+            [cor]: novoStatus
+        }, { merge: true });
 
         if (novoStatus === 'Solicitado o atendimento') {
             this.tocarSom(cor);
             this.agendarReset(cor);
-        } else {
-            this.cancelarReset(cor);
         }
     }
 
     atualizarInterface(cor, status) {
+        // Atualiza o toggle
         const toggle = document.getElementById(`toggle-${cor}`);
         if (toggle) {
             toggle.classList.toggle('active', status === 'Solicitado o atendimento');
@@ -215,6 +226,7 @@ class ToggleManager {
                 status === 'Solicitado o atendimento' ? 'Aguarde Garçom' : 'Chamar Garçom';
         }
 
+        // Atualiza o status
         const elementoStatus = document.getElementById(`status-${cor}`);
         if (elementoStatus) {
             elementoStatus.textContent = status;
@@ -227,7 +239,9 @@ class ToggleManager {
 
     async limparStatus(cor) {
         const docRef = doc(db, "chamados", "status");
-        await setDoc(docRef, { [cor]: 'Não Solicitado Atendimento' }, { merge: true });
+        await setDoc(docRef, {
+            [cor]: 'Não Solicitado Atendimento'
+        }, { merge: true });
         this.cancelarReset(cor);
     }
 
@@ -236,7 +250,6 @@ class ToggleManager {
         const resetData = {};
         cores.forEach(cor => resetData[cor] = 'Não Solicitado Atendimento');
         await setDoc(docRef, resetData, { merge: true });
-        cores.forEach(cor => this.cancelarReset(cor));
     }
 
     agendarReset(cor) {
@@ -260,5 +273,6 @@ class ToggleManager {
 
 const gerenciador = new ToggleManager();
 
+// Funções globais
 window.limparStatus = (cor) => gerenciador.limparStatus(cor);
 window.limparTodosStatus = () => gerenciador.limparTodosStatus();
