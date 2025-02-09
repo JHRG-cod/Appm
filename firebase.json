@@ -1,16 +1,10 @@
- 
 {
   "hosting": {
-    "public": "out", // Diretório de saída do Vercel
+    "public": "APPM",
     "ignore": [
+      "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
     ]
   }
 }
