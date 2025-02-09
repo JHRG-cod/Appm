@@ -131,6 +131,8 @@ window.limparTodosStatus = () => gerenciador.limparTodosStatus(); */
 // script.js
 import { db } from '../firebase.js';
 import { doc, setDoc, onSnapshot, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { db } from '../src/firebase.js'; // Caminho correto
+
 
 const ALERT_SOUND_PATH = './sons/alerta.mp3';
 const cores = [
