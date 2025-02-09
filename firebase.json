@@ -1,0 +1,16 @@
+ 
+{
+  "hosting": {
+    "public": "out", // Diretório de saída do Vercel
+    "ignore": [
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
