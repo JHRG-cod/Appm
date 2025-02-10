@@ -7,7 +7,7 @@
     "build": "next build && next export",
     "start": "next start",
     "deploy:firebase": "firebase deploy --only hosting",
-    "deploy:vercel": "vercel --prod"
+    "deploy:vercel": "npx vercel --prod"
   },
   "dependencies": {
     "firebase": "^10.12.0",
@@ -16,7 +16,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "firebase-tools": "^13.15.0"
-    ,"vercel": "^36.0.0"
+    "firebase-tools": "^13.15.0",
+    "vercel": "^36.0.0"
   }
-  }
+}
