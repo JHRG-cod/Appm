@@ -1,24 +1,47 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chamar Garçom - Amarelo Claro</title>
-    <link rel="stylesheet" href="../css/amarelo-claro.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chamar Garçom - Amarelo</title>
+  <!-- Importa o CSS principal -->
+  <link rel="stylesheet" href="../css/amarelo-claro.css">
 </head>
 <body>
-    <h1>Clique aqui para chamar o Garçom </h1> <!---- Praça Superior
-    
-     Container principal para o toggle -->
-    <div class="toggle-container" id="toggle-amarelo-claro" data-cor="amarelo-claro">
-        <div class="toggle-content">
+  <!-- Container geral -->
+  <div class="container">
+    <!-- Cabeçalho com gradiente amarelo -->
+    <header class="header">
+      <h1>Chamar Garçom</h1>
+      <p>Clique no botão abaixo para solicitar atendimento.</p>
+    </header>
+
+    <!-- Conteúdo principal -->
+    <main class="main-content">
+      <!-- Card único com a funcionalidade de chamar garçom -->
+      <section class="card">
+        <h2>Atendimento</h2>
+        <p>Para chamar o garçom, ative o botão abaixo.</p>
+
+        <!-- Toggle container -->
+        <div class="toggle-container" id="toggle-amarelo-claro" data-cor="amarelo-claro">
+          <div class="toggle-content">
             <div class="toggle-text">Chamar Garçom</div>
             <div class="toggle-slider">
-                <div class="toggle-button"></div>
+              <div class="toggle-button"></div>
             </div>
+          </div>
         </div>
-    </div>
+      </section>
+    </main>
 
-    <script src="../js/script.js" type="module"></script>
+    <!-- Rodapé -->
+    <footer class="footer">
+      <p>&copy; 2025 APPM</p>
+    </footer>
+  </div>
+
+  <!-- Script para controlar o toggle -->
+  <script src="../js/script.js" type="module"></script>
 </body>
 </html>

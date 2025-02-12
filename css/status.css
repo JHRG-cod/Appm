@@ -1,165 +1,218 @@
-/* Geral */
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #000;
-    color: white;
+/* ===============================
+   Variáveis de Tema
+=============================== */
+:root {
+    /* Cores principais */
+    --bg-color: #000;
+    --text-color: #fff;
+    --btn-bg: #141414;
+    --btn-hover: #666;
+  
+    /* Cores dos Quadrantes */
+    --azul: #0000FF;
+    --azul-escuro: #02105f;
+    --azul-claro: #95dbfc;
+  
+    --vermelho: #610505;
+    --vermelho-escuro: #300000;
+    --vermelho-claro: #ff0000;
+  
+    --verde: #008000;
+    --verde-escuro: #063801;
+    --verde-claro: #82fc5c;
+  
+    --amarelo: #f0ec1b;
+    --amarelo-escuro: #7c7e05;
+    --amarelo-claro: #ffff00;
+  }
+  
+  /* ===============================
+     Reset e Estilos Globais
+  =============================== */
+  *,
+  *::before,
+  *::after {
     margin: 0;
     padding: 0;
-}
-
-/* Cabeçalho */
-h1 {
-    margin-top: 20px;
-    font-size: 2em;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    text-align: center;
+    line-height: 1.6;
+    padding: 0 1rem;
+  }
+  
+  /* ===============================
+     Cabeçalho
+  =============================== */
+  h1 {
+    margin: 1.25rem 0;
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
     text-transform: uppercase;
-    color: #fff;
+    color: var(--text-color);
     animation: fade-in 1.5s ease-in-out;
-}
-
-/* Quadrantes */
-.quadrantes {
+  }
+  
+  /* ===============================
+     Grid de Quadrantes
+  =============================== */
+  .quadrantes {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    padding: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    padding: 1.5rem;
     max-width: 1200px;
     margin: 0 auto;
-}
-
-/* Cada Quadrante */
-.quadrante {
+  }
+  
+  /* Responsividade: uma coluna em telas menores */
+  @media (max-width: 600px) {
+    .quadrantes {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  /* ===============================
+     Estilo dos Quadrantes
+  =============================== */
+  .quadrante {
     border-radius: 10px;
-    padding: 20px;
+    padding: 1.5rem;
     text-align: center;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     opacity: 0;
     transform: translateY(20px);
-    animation: fade-in 0.8s ease-in-out forwards;
-    transition: opacity 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Quadrante inativo (não chamado) */
-.quadrante:not(.destaque) {
-    opacity: 0.5; /* Opacidade reduzida para quadrantes inativos */
-}
-
-/* Quadrante ativo (chamado) */
-.quadrante.destaque {
-    opacity: 1; /* Opacidade total para quadrantes ativos */
+    animation: fade-in 0.8s ease forwards;
+    transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  /* Quadrantes inativos: opacidade reduzida */
+  .quadrante:not(.destaque) {
+    opacity: 0.5;
+  }
+  
+  /* Quadrante ativo: opacidade total com efeito de pulso */
+  .quadrante.destaque {
+    opacity: 1;
     animation: pulse 1.5s infinite alternate;
-}
-
-/* Cores para os Quadrantes */
-.quadrante.azul {
-    background-color: #0000FF;
-    color: #fff;
-}
-.quadrante.azul-escuro {
-    background-color: #02105f;
-    color: #fff;
-}
-.quadrante.azul-claro {
-    background-color: #95dbfc;
-    color: #fff;
-}
-.quadrante.vermelho {
-    background-color: #610505;
-    color: #fff;
-}
-.quadrante.vermelho-escuro {
-    background-color: #300000;
-    color: #fff;
-}
-.quadrante.vermelho-claro {
-    background-color: #ff0000;
-    color: #fff;
-}
-.quadrante.verde {
-    background-color: #008000;
-    color: #fff;
-}
-.quadrante.verde-escuro {
-    background-color: #063801;
-    color: #fff;
-}
-.quadrante.verde-claro {
-    background-color: #82fc5c;
-    color: #fff;
-}
-.quadrante.amarelo {
-    background-color: #f0ec1b;
+  }
+  
+  /* ===============================
+     Cores dos Quadrantes
+  =============================== */
+  /* Azul */
+  .quadrante.azul         { background-color: var(--azul); }
+  .quadrante.azul-escuro  { background-color: var(--azul-escuro); }
+  .quadrante.azul-claro   { background-color: var(--azul-claro); }
+  
+  /* Vermelho */
+  .quadrante.vermelho         { background-color: var(--vermelho); }
+  .quadrante.vermelho-escuro  { background-color: var(--vermelho-escuro); }
+  .quadrante.vermelho-claro   { background-color: var(--vermelho-claro); }
+  
+  /* Verde */
+  .quadrante.verde         { background-color: var(--verde); }
+  .quadrante.verde-escuro  { background-color: var(--verde-escuro); }
+  .quadrante.verde-claro   { background-color: var(--verde-claro); }
+  
+  /* Amarelo */
+  .quadrante.amarelo         { background-color: var(--amarelo); }
+  .quadrante.amarelo-escuro  { background-color: var(--amarelo-escuro); }
+  .quadrante.amarelo-claro   { background-color: var(--amarelo-claro); }
+  
+  /* Ajuste de cor do texto: para amarelos, use texto escuro */
+  .quadrante.amarelo,
+  .quadrante.amarelo-escuro,
+  .quadrante.amarelo-claro {
     color: #000;
-}
-.quadrante.amarelo-escuro {
-    background-color: #7c7e05;
-    color: #000;
-}
-.quadrante.amarelo-claro {
-    background-color: #Ffff00;
-    color: #000;
-}
-
-/* Botões dentro dos Quadrantes */
-.btn-limpar {
-    margin-top: 10px;
-    padding: 10px 20px;
-    font-size: 1em;
+  }
+  
+  /* Para os demais quadrantes, o texto permanece branco */
+  .quadrante.azul,
+  .quadrante.azul-escuro,
+  .quadrante.azul-claro,
+  .quadrante.vermelho,
+  .quadrante.vermelho-escuro,
+  .quadrante.vermelho-claro,
+  .quadrante.verde,
+  .quadrante.verde-escuro,
+  .quadrante.verde-claro {
+    color: var(--text-color);
+  }
+  
+  /* ===============================
+     Botões dentro dos Quadrantes
+  =============================== */
+  .btn-limpar {
+    margin-top: 0.625rem;
+    padding: 0.625rem 1.25rem;
+    font-size: 1rem;
     border: none;
     border-radius: 5px;
+    background-color: var(--btn-bg);
+    color: var(--text-color);
     cursor: pointer;
-    background-color: #141414;
-    color: white;
     transition: transform 0.2s ease, background-color 0.2s ease;
-}
-.btn-limpar:hover {
-    background-color: #666666;
-    transform: scale(1.1);
-}
-
-/* Botões Gerais */
-.botoes-gerais {
-    margin-top: 20px;
+  }
+  
+  .btn-limpar:hover {
+    background-color: var(--btn-hover);
+    transform: scale(1.05);
+  }
+  
+  /* ===============================
+     Botões Gerais
+  =============================== */
+  .botoes-gerais {
+    margin-top: 1.25rem;
     display: flex;
     justify-content: center;
-    gap: 20px;
-}
-
-.botoes-gerais button {
-    padding: 15px 30px;
-    font-size: 1.2em;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+  
+  .botoes-gerais button {
+    padding: 0.9375rem 1.875rem;
+    font-size: 1.2rem;
     border: none;
     border-radius: 5px;
     background-color: #333;
-    color: white;
+    color: var(--text-color);
     cursor: pointer;
     transition: transform 0.2s ease, background-color 0.2s ease;
-}
-
-.botoes-gerais button:hover {
-    background-color: #666;
-    transform: scale(1.1);
-}
-
-/* Keyframes para animações */
-@keyframes fade-in {
+  }
+  
+  .botoes-gerais button:hover {
+    background-color: var(--btn-hover);
+    transform: scale(1.05);
+  }
+  
+  /* ===============================
+     Animações
+  =============================== */
+  @keyframes fade-in {
     from {
-        opacity: 0;
-        transform: translateY(20px);
+      opacity: 0;
+      transform: translateY(20px);
     }
     to {
-        opacity: 1;
-        transform: translateY(0);
+      opacity: 1;
+      transform: translateY(0);
     }
-}
-
-@keyframes pulse {
+  }
+  
+  @keyframes pulse {
     0% {
-        transform: scale(1);
-        box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.5);
+      transform: scale(1);
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
     }
     100% {
-        transform: scale(1.05);
-        box-shadow: 0px 0px 30px rgba(255, 255, 255, 0.7);
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.7);
     }
-}
+  }
+  

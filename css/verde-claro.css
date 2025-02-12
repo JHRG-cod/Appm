@@ -1,95 +1,167 @@
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    text-align: center;
-    background-color: #000000;
-    color: rgb(255, 255, 255);
+/* =======================
+   Reset e Estilos Globais
+========================= */
+* {
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-}
-
-.toggle-container {
-    width: 300px;
-    padding: 15px;
-    border-radius: 40px;
-    background: linear-gradient(90deg, #28a745, #3de076);
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f7f9fc;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  /* Container geral */
+  .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* =======================
+     Header (cabeçalho)
+  ========================= */
+  .header {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #3b82f6, #60a5fa);
+    color: #fff;
+    border-radius: 8px;
+    margin-bottom: 30px;
+  }
+  
+  .header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+  
+  .header p {
+    font-size: 1.2rem;
+  }
+  
+  /* =======================
+     Main Content
+  ========================= */
+  .main-content {
+    /* Usando Grid para permitir fácil centralização */
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    /* Alinha horizontalmente o card ao centro */
+    justify-items: center;
+  }
+  
+  /* Card (seção com fundo branco) */
+  .card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    /* Se quiser limitar a largura do card, descomente a linha abaixo */
+    /* max-width: 500px; */
+  }
+  
+  .card h2 {
+    font-size: 1.8rem;
+    color: #2563eb;
+    margin-bottom: 15px;
+  }
+  
+  .card p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+  
+  /* =======================
+     Footer (rodapé)
+  ========================= */
+  .footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+    background-color: #e2e8f0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+  }
+  
+  /* =======================
+     Responsividade
+  ========================= */
+  /* Se quiser manter apenas 1 coluna sempre, 
+     você pode remover todo o trecho abaixo. */
+  @media (min-width: 768px) {
+    /* Exemplo: se tiver mais de um card e quiser 2 colunas */
+    /* .main-content {
+      grid-template-columns: repeat(2, 1fr);
+      justify-items: center;
+    } */
+  }
+  
+  /* =======================
+     ESTILOS DO TOGGLE
+  ========================= */
+  
+  /* Container principal do toggle */
+  .toggle-container {
+    width: 250px;
+    margin: 0 auto;
     cursor: pointer;
-    transition: all 0.3s ease;
-    margin: 10px;
-    position: relative;
-    overflow: hidden;
-}
-
-.toggle-content {
+  }
+  
+  /* Conteúdo do toggle (texto + slider) */
+  .toggle-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-color: #f3f4f6;
+    padding: 10px 15px;
+    border-radius: 30px;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Texto que aparece ao lado do botão */
+  .toggle-text {
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  /* Slider (faixa) */
+  .toggle-slider {
     position: relative;
-    z-index: 2;
-}
-
-.toggle-text {
-    font-size: 24px;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: white;
-    transition: all 0.3s ease;
-    padding-left: 20px;
-    flex-grow: 1;
-}
-
-.toggle-slider {
-    width: 100px;
-    height: 50px;
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 25px;
-    position: relative;
-    margin-left: 15px;
-    transition: all 0.3s ease;
-}
-
-.toggle-button {
-    width: 46px;
-    height: 46px;
-    background-color: white;
-    border-radius: 50%;
-    position: absolute;
-    left: 2px;
-    top: 2px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.toggle-container.active {
-    background: linear-gradient(90deg, #3de076, #28a745);
-    box-shadow: 0 0 15px rgba(61, 224, 118, 0.5);
-}
-
-.toggle-container.active .toggle-text {
-    color: #218838;
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
-}
-
-.toggle-container.active .toggle-slider {
-    background-color: rgba(255, 255, 255, 0.3);
-}
-
-.toggle-container.active .toggle-button {
-    left: calc(100% - 48px);
-    background-color: #218838;
-    transform: rotate(360deg);
-}
-
-.toggle-container:hover {
-    transform: scale(1.02);
-    box-shadow: 0 8px 20px rgba(206, 206, 206, 0.3);
-}
-
-.toggle-container:active .toggle-button {
     width: 50px;
-    height: 50px;
-}
+    height: 24px;
+    background-color: #ccc;
+    border-radius: 24px;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Botão que se move dentro do slider */
+  .toggle-button {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: left 0.3s ease;
+  }
+  
+  /* Quando toggle estiver ativo (classe que adicionaremos via JS) */
+  .toggle-container.active .toggle-content {
+    background-color: #3b82f6; /* fundo azul quando ligado */
+    color: #fff;
+  }
+  
+  .toggle-container.active .toggle-slider {
+    background-color: #2563eb; /* slider azul escuro */
+  }
+  
+  .toggle-container.active .toggle-button {
+    left: 28px; /* move a bolinha para a direita */
+  }
+  
