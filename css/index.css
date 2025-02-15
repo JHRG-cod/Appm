@@ -1,4 +1,6 @@
-/* Geral */
+/* ===============================
+   Estilo Global
+=============================== */
 body {
     font-family: Arial, sans-serif;
     text-align: center;
@@ -8,7 +10,9 @@ body {
     padding: 20px;
 }
 
-/* Cabeçalho */
+/* ===============================
+   Cabeçalho
+=============================== */
 h1 {
     margin-bottom: 20px;
     font-size: 2.5em;
@@ -17,7 +21,9 @@ h1 {
     animation: fade-in 1.5s ease-in-out;
 }
 
-/* Botões */
+/* ===============================
+   Botões
+=============================== */
 button {
     padding: 15px 30px;
     margin: 10px;
@@ -31,7 +37,7 @@ button {
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
 }
 
-/* Botões por cor */
+/* Efeito hover e clique */
 button:hover {
     transform: scale(1.1);
     box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.7);
@@ -41,64 +47,21 @@ button:active {
     transform: scale(0.95);
 }
 
-button.azul {
-    background-color: #0000FF;
-}
-button.azul-escuro {
-    background-color: #02105f;
-}
-button.azul-claro {
-    background-color: #95dbfc;
-}
-button.vermelho {
-    background-color: #610505;
-}
-button.vermelho-escuro {
-    background-color: #300000;
-}
-button.vermelho-claro {
-    background-color: #ff0000;
-}
-button.verde {
-    background-color: #008000;
-}
-button.verde-escuro {
-    background-color: #063801;
-}
-button.verde-claro {
-    background-color: #82fc5c;
-}
-button.amarelo {
-    background-color: #f0ec1b;
-    color: black;
-}
-button.amarelo-escuro {
-    background-color: #7c7e05;
-    color: black;
-}
-button.amarelo-claro {
-    background-color: #ffff00;
-    color: black;
-}
+/* ===============================
+   Botões Coloridos
+=============================== */
+button.azul          { background-color: #0000FF; }
+button.azul-escuro   { background-color: #02105f; }
+button.azul-claro    { background-color: #95dbfc; }
 
-/* Botão de status */
-button.status {
-    background-color: #333;
-    color: white;
-}
+button.vermelho      { background-color: #610505; }
+button.vermelho-escuro { background-color: #300000; }
+button.vermelho-claro  { background-color: #ff0000; }
 
-button.status:hover {
-    background-color: #666;
-}
+button.verde         { background-color: #008000; }
+button.verde-escuro  { background-color: #063801; }
+button.verde-claro   { background-color: #82fc5c; }
 
-/* Keyframes para animações */
-@keyframes fade-in {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+button.amarelo       { background-color: #f0ec1b; color: black; }
+button.amarelo-escuro { background-color: #7c7e05; color: black; }
+button.amarelo-claro  { background-color: #ffff00; color: black; }
